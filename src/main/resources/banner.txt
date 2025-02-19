@@ -1,0 +1,15 @@
+________                             ____                 ___                                                   __________
+`MMMMMMMb.                          6MMMMb/               `MM                                                   `MMMMMMMMM
+ MM    `Mb            /            8P    YM                MM                     /                              MM      \                            /
+ MM     MM   _____   /M           6M      Y    ___     ____MM    ___      ____   /M     ___  __   _____          MM     ____    ___  ____  ___  __   /M      _____     ____
+ MM    .M9  6MMMMMb /MMMMM        MM         6MMMMb   6MMMMMM  6MMMMb    6MMMMb\/MMMMM  `MM 6MM  6MMMMMb         MM    ,`MM(    )M' 6MMMMb `MM 6MMb /MMMMM  6MMMMMb   6MMMMb\
+ MMMMMMM(  6M'   `Mb MM           MM        8M'  `Mb 6M'  `MM 8M'  `Mb  MM'    ` MM      MM69 " 6M'   `Mb        MMMMMMM `Mb    d' 6M'  `Mb MMM9 `Mb MM    6M'   `Mb MM'    `
+ MM    `Mb MM     MM MM           MM            ,oMM MM    MM     ,oMM  YM.      MM      MM'    MM     MM        MM    `  YM.  ,P  MM    MM MM'   MM MM    MM     MM YM.
+ MM     MM MM     MM MM           MM        ,6MM9'MM MM    MM ,6MM9'MM   YMMMMb  MM      MM     MM     MM        MM        MM  M   MMMMMMMM MM    MM MM    MM     MM  YMMMMb
+ MM     MM MM     MM MM           YM      6 MM'   MM MM    MM MM'   MM       `Mb MM      MM     MM     MM        MM        `Mbd'   MM       MM    MM MM    MM     MM      `Mb
+ MM    .M9 YM.   ,M9 YM.  ,        8b    d9 MM.  ,MM YM.  ,MM MM.  ,MM  L    ,MM YM.  ,  MM     YM.   ,M9        MM      /  YMP    YM    d9 MM    MM YM.  ,YM.   ,M9 L    ,MM
+_MMMMMMM9'  YMMMMM9   YMMM9         YMMMM9  `YMMM9'Yb.YMMMMMM_`YMMM9'Yb.MYMMMM9   YMMM9 _MM_     YMMMMM9        _MMMMMMMMM   M      YMMMM9 _MM_  _MM_ YMMM9 YMMMMM9  MYMMMM9
+
+${application.title} ${application.version}
+Spring boot version ${spring-boot.version}
+Powered by Edmar Reis

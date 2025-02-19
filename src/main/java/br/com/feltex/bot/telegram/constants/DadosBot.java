@@ -1,4 +1,4 @@
-package br.com.feltex.bot.telegram;
+package br.com.feltex.bot.telegram.constants;
 
 public class DadosBot {
     public static final String BOT_TOKEN = "";
