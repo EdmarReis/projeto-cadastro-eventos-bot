@@ -52,6 +52,8 @@ public class EchoBot extends TelegramLongPollingBot {
         var resposta = switch (textoMensagem) {
             case "data" -> getData();
             case "hora" -> getHora();
+            case "/compromissos" -> getCompromissos();
+            case "/pagamentos" -> getPagamentos();
             case "status" -> "Estou operacional";
             case "ola", "olá", "oi" -> "\uD83E\uDD16 Olá, vejo que você entende muito sobre BOTS!";
             case "quem é você", "quem e voce" -> "\uD83E\uDD16 Eu sou um bot";
@@ -60,7 +62,6 @@ public class EchoBot extends TelegramLongPollingBot {
                 if (textoMensagem.startsWith("finalizar id ")) {
                     String id = textoMensagem.replace("finalizar id ", "").trim();
                     yield finalizarEvento(id);
-                    //yield null;
                 } else {
                     yield "Não entendi!\nDigite /help para ver os comandos disponíveis.";
                 }
@@ -73,6 +74,47 @@ public class EchoBot extends TelegramLongPollingBot {
                 .text(resposta)
                 .chatId(chatId)
                 .build();
+    }
+
+    private String getCompromissos() {
+
+        try {
+
+            String url = "http://localhost:8085/envio/compromissos";
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Void> entity = new HttpEntity<>(null, headers);
+            RestTemplate restTemplate = new RestTemplate();
+
+            return restTemplate.postForObject(url, entity, String.class);
+        } catch (NumberFormatException e) {
+            return "Erro para enviar compromissos";
+        } catch (Exception e) {
+            return "Erro para enviar compromissos: " + e.getMessage();
+        }
+    }
+
+    private String getPagamentos() {
+
+        try {
+
+            String url = "http://localhost:8085/envio/pagamentos";
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Void> entity = new HttpEntity<>(null, headers);
+            RestTemplate restTemplate = new RestTemplate();
+
+            return restTemplate.postForObject(url, entity, String.class);
+        } catch (NumberFormatException e) {
+            return "Erro para enviar pagamentos";
+        } catch (Exception e) {
+            return "Erro para enviar pagamentos: " + e.getMessage();
+        }
+
     }
 
     private String getData() {
@@ -93,7 +135,6 @@ public class EchoBot extends TelegramLongPollingBot {
 
             HttpEntity<Void> entity = new HttpEntity<>(null, headers); // Corpo vazio
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForObject(url, entity, String.class);
 
             return restTemplate.postForObject(url, entity, String.class);
         } catch (NumberFormatException e) {
