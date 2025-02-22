@@ -21,7 +21,7 @@ public class EnviaMsg {
 
         log.info("[Bot-eventos] Método de envio de mensagem para o telegram chamado");
 
-        String chatId = "387938080"; // Substitua pelo ID correto
+        String chatId = "";
         SendMessage msg = SendMessage.builder()
                 .chatId(chatId)
                 .text(mensagem)
