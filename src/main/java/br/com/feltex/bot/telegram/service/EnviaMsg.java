@@ -13,6 +13,8 @@ public class EnviaMsg {
 
     private final EchoBot bot;
 
+    private final String chatId = "";
+
     public EnviaMsg(EchoBot bot) {
         this.bot = bot;
     }
@@ -21,7 +23,6 @@ public class EnviaMsg {
 
         log.info("[Bot-eventos] Método de envio de mensagem para o telegram chamado");
 
-        String chatId = "387938080"; // Substitua pelo ID correto
         SendMessage msg = SendMessage.builder()
                 .chatId(chatId)
                 .text(mensagem)
@@ -48,7 +49,6 @@ public class EnviaMsg {
     public void enviarMsgCompromisso(String mensagem) {
         log.info("[Bot-eventos] Método de envio de compromisso para o telegram chamado");
 
-        String chatId = "387938080"; // Substitua pelo ID correto
         SendMessage msg = SendMessage.builder()
                 .chatId(chatId)
                 .text(mensagem)

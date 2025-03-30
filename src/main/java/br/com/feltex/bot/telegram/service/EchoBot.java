@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EchoBot extends TelegramLongPollingBot {
 
-    private RestTemplate restTemplate;
+    private String API_KEY = "";
 
     @Override
     public String getBotUsername() {
@@ -60,7 +60,12 @@ public class EchoBot extends TelegramLongPollingBot {
                 if (textoMensagem.startsWith("finalizar id ")) {
                     String id = textoMensagem.replace("finalizar id ", "").trim();
                     yield finalizarEvento(id);
-                    //yield null;
+                } else if (textoMensagem.startsWith("compromissos/")){
+                    String usuario = textoMensagem.replace("compromissos/","".trim());
+                    yield getCompromissos(usuario);
+                } else if (textoMensagem.startsWith("pagamentos/")){
+                    String usuario = textoMensagem.replace("pagamentos/","".trim());
+                    yield getPagamentos(usuario);
                 } else {
                     yield "Não entendi!\nDigite /help para ver os comandos disponíveis.";
                 }
@@ -73,6 +78,49 @@ public class EchoBot extends TelegramLongPollingBot {
                 .text(resposta)
                 .chatId(chatId)
                 .build();
+    }
+
+    private String getCompromissos(String usuario) {
+
+        try {
+
+            String url = "http://localhost:8085/envio/compromissos/"+usuario;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("X-API-KEY",API_KEY);
+
+            HttpEntity<Void> entity = new HttpEntity<>(null, headers);
+            RestTemplate restTemplate = new RestTemplate();
+
+            return restTemplate.postForObject(url, entity, String.class);
+        } catch (NumberFormatException e) {
+            return "Erro para enviar compromissos";
+        } catch (Exception e) {
+            return "Erro para enviar compromissos: " + e.getMessage();
+        }
+    }
+
+    private String getPagamentos(String usuario) {
+
+        try {
+
+            String url = "http://localhost:8085/envio/pagamentos/"+usuario;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("X-API-KEY",API_KEY);
+
+            HttpEntity<Void> entity = new HttpEntity<>(null, headers);
+            RestTemplate restTemplate = new RestTemplate();
+
+            return restTemplate.postForObject(url, entity, String.class);
+        } catch (NumberFormatException e) {
+            return "Erro para enviar pagamentos";
+        } catch (Exception e) {
+            return "Erro para enviar pagamentos: " + e.getMessage();
+        }
+
     }
 
     private String getData() {
@@ -90,10 +138,10 @@ public class EchoBot extends TelegramLongPollingBot {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON); // Pode ser omitido se não houver JSON no corpo
+            headers.add("X-API-KEY",API_KEY);
 
             HttpEntity<Void> entity = new HttpEntity<>(null, headers); // Corpo vazio
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForObject(url, entity, String.class);
 
             return restTemplate.postForObject(url, entity, String.class);
         } catch (NumberFormatException e) {
