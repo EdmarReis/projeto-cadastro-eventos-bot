@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EchoBot extends TelegramLongPollingBot {
 
-    private RestTemplate restTemplate;
+    private String API_KEY = "";
 
     @Override
     public String getBotUsername() {
@@ -52,8 +52,6 @@ public class EchoBot extends TelegramLongPollingBot {
         var resposta = switch (textoMensagem) {
             case "data" -> getData();
             case "hora" -> getHora();
-            case "/compromissos" -> getCompromissos();
-            case "/pagamentos" -> getPagamentos();
             case "status" -> "Estou operacional";
             case "ola", "olá", "oi" -> "\uD83E\uDD16 Olá, vejo que você entende muito sobre BOTS!";
             case "quem é você", "quem e voce" -> "\uD83E\uDD16 Eu sou um bot";
@@ -62,6 +60,12 @@ public class EchoBot extends TelegramLongPollingBot {
                 if (textoMensagem.startsWith("finalizar id ")) {
                     String id = textoMensagem.replace("finalizar id ", "").trim();
                     yield finalizarEvento(id);
+                } else if (textoMensagem.startsWith("compromissos/")){
+                    String usuario = textoMensagem.replace("compromissos/","".trim());
+                    yield getCompromissos(usuario);
+                } else if (textoMensagem.startsWith("pagamentos/")){
+                    String usuario = textoMensagem.replace("pagamentos/","".trim());
+                    yield getPagamentos(usuario);
                 } else {
                     yield "Não entendi!\nDigite /help para ver os comandos disponíveis.";
                 }
@@ -76,14 +80,15 @@ public class EchoBot extends TelegramLongPollingBot {
                 .build();
     }
 
-    private String getCompromissos() {
+    private String getCompromissos(String usuario) {
 
         try {
 
-            String url = "http://localhost:8085/envio/compromissos";
+            String url = "http://localhost:8085/envio/compromissos/"+usuario;
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("X-API-KEY",API_KEY);
 
             HttpEntity<Void> entity = new HttpEntity<>(null, headers);
             RestTemplate restTemplate = new RestTemplate();
@@ -96,14 +101,15 @@ public class EchoBot extends TelegramLongPollingBot {
         }
     }
 
-    private String getPagamentos() {
+    private String getPagamentos(String usuario) {
 
         try {
 
-            String url = "http://localhost:8085/envio/pagamentos";
+            String url = "http://localhost:8085/envio/pagamentos/"+usuario;
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("X-API-KEY",API_KEY);
 
             HttpEntity<Void> entity = new HttpEntity<>(null, headers);
             RestTemplate restTemplate = new RestTemplate();
@@ -132,6 +138,7 @@ public class EchoBot extends TelegramLongPollingBot {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON); // Pode ser omitido se não houver JSON no corpo
+            headers.add("X-API-KEY",API_KEY);
 
             HttpEntity<Void> entity = new HttpEntity<>(null, headers); // Corpo vazio
             RestTemplate restTemplate = new RestTemplate();
